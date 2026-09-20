@@ -6,8 +6,14 @@ and verification checkpoints to the orchestration workflow you already use.
 The key cadence is simple: implementers self-check their assignments, the
 orchestrator verifies the combined result, and one independent reviewer assesses
 the completed task before acceptance. Review findings lead to focused corrections
-and targeted follow-up. Individual file edits stay within the implementer's
-self-check loop.
+and targeted follow-up. Implementers group related edits into a completed scenario
+and verify it before handoff.
+
+Verification stops when the relevant acceptance criteria are supported and required
+checks pass. Additional checks address a specific failure, unresolved risk, or
+change affecting earlier evidence. For example, adjusting dropdown spacing needs
+an inspection of the open list; changing selection behavior also needs choosing
+an item and confirming the result.
 
 ## Use
 

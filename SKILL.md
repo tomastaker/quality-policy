@@ -11,6 +11,13 @@ description: >-
 
 Verify the outcome. Scale the depth of verification to the change and its risks.
 
+Choose the smallest set of checks that demonstrates the requested behavior and
+satisfies project requirements. Verify a coherent change before handoff, grouping
+related edits into one scenario check. Once the relevant criteria are supported
+and required checks pass, proceed to the next checkpoint. Each additional check
+should answer a specific unresolved question raised by a failure, a concrete risk,
+or a later change that could affect the verified behavior.
+
 ## Fit the existing workflow
 
 Use the active orchestration workflow to assign work, exchange findings, and
@@ -35,13 +42,14 @@ the requested behavior and explain any agreed change to them.
 
 ## 2. Before handoff: verify the assigned result
 
-**Implementer:** start with the changed scenario and its direct dependencies.
-Expand checks when a concrete risk or project requirement calls for it. Verify
+**Implementer:** start with the changed scenario. Extend checks to dependencies
+when a concrete risk or project requirement calls for it. Verify
 behavior and meaningful effects: a successful build establishes buildability;
 a save operation requires checking the persisted state.
 
-For a bug fix, reproduce the failure when feasible and add a regression test that
-protects the corrected behavior. Derive test expectations from the intended
+For a bug fix, reproduce the failure when feasible. Add a regression test when it
+can reproduce the defect and its protection justifies the maintenance cost, or
+when the project requires one. Derive test expectations from the intended
 behavior; justify changed snapshots or fixtures against that behavior. Use the
 project's existing test tools and authorized environments and data.
 
@@ -52,11 +60,17 @@ follow the ordinary user path and inspect both the resulting state and its
 appearance. Use browser or application automation available in the environment.
 
 Select checks by impact: inspect affected styling for a cosmetic change; exercise
-keyboard and focus behavior for a changed control; check relevant viewport sizes
-for layout changes. Include long content and other edge states when the change
+keyboard and focus when interaction or accessibility may be affected; check
+relevant viewport sizes when responsive layout may be affected. Include long
+content and other edge states when the change
 puts them at risk. Use ordinary interaction to establish usability, screenshots
 to assess appearance, and state assertions to establish behavior. Add permanent
 end-to-end tests when their regression value warrants the maintenance cost.
+
+For example, a dropdown spacing change needs an inspection of the open list. A
+selection change needs opening the list, choosing an item, and confirming the
+resulting value and appearance. A persistence change also needs reopening the
+form to confirm the saved value.
 
 ### Evidence at handoff
 
@@ -75,8 +89,10 @@ handoff; the orchestrator owns the remaining acceptance work.
 **Orchestrator:** collect the implementers' results and check the combined change
 against task acceptance criteria. Exercise interactions between their changes
 where integration creates risk. Reuse evidence that still applies and refresh
-checks invalidated by merging, conflict resolution, or later edits. Ensure tests
-and running applications reflect the intended working copy and current change.
+checks when merging, conflict resolution, or later edits could affect the behavior
+they established. Evidence remains usable across revisions when the checked
+behavior and relevant dependencies are unchanged. Run any fresh checks against
+the intended working copy and current application state.
 
 **Ready for review when:** all assigned implementation work is accounted for, the
 combined diff is stable, and verification results and limitations are available.
@@ -86,7 +102,7 @@ combined diff is stable, and verification results and limitations are available.
 **Orchestrator:** send the combined task diff, acceptance criteria, relevant
 context, and verification evidence to one independent reviewer. Schedule this
 review after implementation and integration, at the boundary of the whole task.
-Individual file edits and intermediate implementer handoffs use self-checks.
+Implementers hand off coherent changes with their self-check results.
 Count an equivalent existing independent review toward this checkpoint, while
 honoring any additional reviews required by the project.
 
